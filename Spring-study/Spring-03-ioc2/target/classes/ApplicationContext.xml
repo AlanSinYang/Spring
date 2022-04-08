@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!--    import,一般用于团队开发使用,它可以多个配置文件,导入合并一个
+        假设,现在项目中有多个人开发,这三个人复制不通的类开发,不通的类需要注册在不同的bean中,
+        我们可以利用import将所有人的bean.xml合并为一个总的
+        1：xxx的bean.xml
+        2：xx的bean.xml
+        3：xxx的bean.xml
+        归和一个总的ApplicationContext.xml。
+        使用的时候,直接使用总配置就可以了
+-->
+    <import resource="beans.xml"/>
+    <import resource="beans2.xml"/>
+    <import resource="beans3.xml"/>
+</beans>
