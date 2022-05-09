@@ -1,3 +1,221 @@
+## 1. 简介
+
+spring理念：是现有的技术更加容易使用，本身是一个大杂烩。
+
+- SSH：Struct2 + Spring + Hibernate
+- SSM: SpringMVC + Spring + Mybatis
+
+官网： https://spring.io/projects/spring-framework#overview
+
+官方下载： https://repo.spring.io/release/org/springframework/spring/
+
+GitHub： https://github.com/spring-projects/spring-framework
+
+[Spring Web MVC](https://mvnrepository.com/artifact/org.springframework/spring-webmvc) **»** [5.2.5.RELEASE](https://mvnrepository.com/artifact/org.springframework/spring-webmvc/5.2.5.RELEASE)
+
+```xml
+<!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-webmvc</artifactId>
+    <version>5.2.5.RELEASE</version>
+</dependency>
+
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-jdbc</artifactId>
+    <version>5.2.3.RELEASE</version>
+</dependency>
+```
+
+- spring是开源的免费的容器。
+- spring是一个轻量级的，非入侵式的。
+- 控制反转（IOC），面向切面编程 (AOP)。
+- 支持事务处理，对框架整合的支持。
+
+总结：spring是一个轻量级的控制反转(IOC)和面向切面编程(AOP)的框架。
+
+## 2.IOC理论
+
+1. UserDao
+2. UserDaoImp
+3. UserSevice
+4. UserServiceImp
+
+在之前，用户的需求可能会影响原来的代码。
+
+使用一个set。
+
+```java
+public void setUserDao(UserDao userDao){
+    this.userDao = userDao;
+}
+```
+
+- 之前是主动创建对象，控制权在程序员手上。
+- 使用set之后，是被动接受对象。
+
+## 3. Hello Spring
+
+pojo中
+
+```java
+package com.hou.pojo;
+
+public class Hello {
+
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Hello{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+}
+```
+
+resource种
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--bean = 对象-->
+    <!--id = 变量名-->
+    <!--class = new的对象-->
+    <!--property 相当于给对象中的属性设值-->
+    
+    <bean id="hello" class="com.hou.pojo.Hello">
+        <property name="name" value="Spring"/>
+    </bean>
+</beans>
+```
+
+test
+
+```java
+import com.hou.pojo.Hello;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Mytest {
+
+    public static void main(String[] args) {
+        //获取spring上下文对象
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        //我们的对象下能在都在spring·中管理了，我们要使用，直接取出来就可以了
+        Hello hello = (Hello) context.getBean("hello");
+        System.out.println(hello.toString());
+    }
+}
+```
+
+bean = 对象
+id = 变量名
+class = new的对象
+property 相当于给对象中的属性设值
+
+核心用set注入
+
+第一个文件中
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="userdaomysql" class="com.hou.dao.UserDaoMysqlImpl"></bean>
+
+    <bean id="userServiceImpl" class="com.hou.service.UserServiceImp">
+        <!--ref引用spring中已经创建很好的对象-->
+        <!--value是一个具体的值-->
+        <property name="userDao" ref="userdaomysql"/>
+    </bean>
+
+</beans>
+```
+
+## 4. IOC创建对象的方式
+
+1. 使用无参构造创建对象，默认。
+2. 使用有参构造
+
+下标赋值
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="user" class="com.hou.pojo.User">
+        <constructor-arg index="0" value="hou"/>
+    </bean>
+</beans>
+```
+
+类型赋值（不建议使用）
+
+```xml
+<bean id="user" class="com.hou.pojo.User">
+    <constructor-arg type="java.lang.String" value="dong"/>
+</bean>
+```
+
+直接通过参数名
+
+```xml
+<bean id="user" class="com.hou.pojo.User">
+    <constructor-arg name="name" value="hou"></constructor-arg>
+</bean>
+```
+
+Spring类似于婚介网站！
+
+你想不想要，对象都在里面。注册bean之后用不用被实例化。
+
+## 5. Spring配置
+
+**别名**
+
+```xml
+<bean id="user" class="com.hou.pojo.User">
+    <constructor-arg name="name" value="hou"></constructor-arg>
+</bean>
+
+<alias name="user" alias="user2aaa"/>
+```
+
+**Bean的配置**
+
+- id：bean的id标识符
+- class：bean对象所对应的类型
+- name：别名，更高级，可以同时取多个别名。
+
+**import**
+
+一般用于团队开发，它可以将多个配置文件，导入合并为一个
+
+```xml
+<import resource="beans.xml"/>
+```
+
+
 ## 常用依赖
 
 ```xml
