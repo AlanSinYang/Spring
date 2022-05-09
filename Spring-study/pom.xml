@@ -13,6 +13,11 @@
         <module>Spring-02-HelloSpring</module>
         <module>Spring-03-ioc2</module>
         <module>Spring-04-DI</module>
+        <module>Spring-05-Bean_Autowired</module>
+        <module>Spring-06-annotations</module>
+        <module>Spring-07-AppConfig</module>
+        <module>Spring-08-Proxy</module>
+        <module>Spring-09-AOP</module>
     </modules>
 
     <dependencies>
@@ -21,6 +26,12 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>5.2.9.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
