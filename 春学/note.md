@@ -1,4 +1,4 @@
-## 1. 简介
+## 简介
 
 spring理念：是现有的技术更加容易使用，本身是一个大杂烩。
 
@@ -35,7 +35,7 @@ GitHub： https://github.com/spring-projects/spring-framework
 
 总结：spring是一个轻量级的控制反转(IOC)和面向切面编程(AOP)的框架。
 
-## 2.IOC理论
+## IOC理论
 
 1. UserDao
 2. UserDaoImp
@@ -55,7 +55,7 @@ public void setUserDao(UserDao userDao){
 - 之前是主动创建对象，控制权在程序员手上。
 - 使用set之后，是被动接受对象。
 
-## 3. Hello Spring
+## Hello Spring
 
 pojo中
 
@@ -149,7 +149,7 @@ property 相当于给对象中的属性设值
 </beans>
 ```
 
-## 4. IOC创建对象的方式
+## IOC创建对象的方式
 
 1. 使用无参构造创建对象，默认。
 2. 使用有参构造
@@ -189,7 +189,7 @@ Spring类似于婚介网站！
 
 你想不想要，对象都在里面。注册bean之后用不用被实例化。
 
-## 5. Spring配置
+## Spring配置
 
 **别名**
 
